@@ -110,7 +110,7 @@ const App = () => {
       likes: blog.likes + 1,
       user: blog.user.id
     })
-    updatedBlog.user = user
+    updatedBlog.user = user 
     setBlogs(blogs.map(b => b.id === updatedBlog.id ? updatedBlog : b))
   }
 
@@ -126,7 +126,7 @@ const App = () => {
             <BlogForm newBlog={newBlog} handleNewBlog={handleNewBlog} handleNewBlogInputChange={handleNewBlogInputChange} />
           </Toggleable>
       }
-      {blogs.map(blog =>
+      {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
         <Blog key={blog.id} blog={blog} handleLike={() => handleLike(blog)}/>
       )}
     </div>

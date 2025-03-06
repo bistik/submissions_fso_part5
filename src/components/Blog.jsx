@@ -13,7 +13,7 @@ const Blog = ({ blog, handleLike }) => {
         <button style={showWhenVisible} onClick={toggleVisibility}>hide</button>
       </div>
       <div style={showWhenVisible}>
-        {blog.url}
+        <a href={blog.url} target="_blank">{blog.url}</a>
         <br />
         likes {blog.likes} <button onClick={handleLike}>like</button>
         <br />
