@@ -26,3 +26,9 @@
   border-width: 1px;
   margin-bottom: 5px;
 }
+
+.remove-button {
+  background-color: red;
+  color: white;
+  border: none;
+}

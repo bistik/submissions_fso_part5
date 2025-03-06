@@ -114,6 +114,18 @@ const App = () => {
     setBlogs(blogs.map(b => b.id === updatedBlog.id ? updatedBlog : b))
   }
 
+  const handleDelete = async (blog) => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      await blogService.deleteBlog(blog.id)
+      setBlogs(blogs.filter(b => b.id !== blog.id))
+      setSuccessMessage(`${blog.title} by ${blog.author} removed`)
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
+    }
+  }
+  
+
   return (
     <div>
       {user === null ? <h2>log in to application</h2> : <h2>blogs</h2>}
@@ -127,7 +139,10 @@ const App = () => {
           </Toggleable>
       }
       {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog} handleLike={() => handleLike(blog)}/>
+        <Blog 
+          key={blog.id} blog={blog} loginUser={user}
+          handleLike={() => handleLike(blog)} handleDelete={() => handleDelete(blog)}
+        />
       )}
     </div>
   )
