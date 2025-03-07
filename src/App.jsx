@@ -9,7 +9,7 @@ import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState({title: '', author: '', url: ''})
+  const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -20,7 +20,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const App = () => {
     blogFormRef.current.toggleVisibility()
     blogs.push(createdBlog)
     setBlogs(blogs)
-    setNewBlog({title: '', author: '', url: ''})
+    setNewBlog({ title: '', author: '', url: '' })
     setSuccessMessage(`a new blog ${createdBlog.title} by ${createdBlog.author} added`)
     setTimeout(() => {
       setSuccessMessage(null)
@@ -110,7 +110,7 @@ const App = () => {
       likes: blog.likes + 1,
       user: blog.user.id
     })
-    updatedBlog.user = user 
+    updatedBlog.user = user
     setBlogs(blogs.map(b => b.id === updatedBlog.id ? updatedBlog : b))
   }
 
@@ -124,7 +124,6 @@ const App = () => {
       }, 5000)
     }
   }
-  
 
   return (
     <div>
@@ -135,11 +134,11 @@ const App = () => {
       {user === null
         ? loginForm()
         : <Toggleable buttonLabel='new blog' ref={blogFormRef}>
-            <BlogForm newBlog={newBlog} handleNewBlog={handleNewBlog} handleNewBlogInputChange={handleNewBlogInputChange} />
-          </Toggleable>
+          <BlogForm newBlog={newBlog} handleNewBlog={handleNewBlog} handleNewBlogInputChange={handleNewBlogInputChange} />
+        </Toggleable>
       }
       {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <Blog 
+        <Blog
           key={blog.id} blog={blog} loginUser={user}
           handleLike={() => handleLike(blog)} handleDelete={() => handleDelete(blog)}
         />

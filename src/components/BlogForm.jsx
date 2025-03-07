@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types'
+
 const BlogForm = ({ newBlog, handleNewBlog, handleNewBlogInputChange }) => {
   return (
-    <div>      
+    <div>
       <h2>create new</h2>
       <form onSubmit={handleNewBlog}>
         title:<input type="text" value={newBlog.title} name="title" onChange={handleNewBlogInputChange} /><br/>
@@ -10,6 +12,12 @@ const BlogForm = ({ newBlog, handleNewBlog, handleNewBlogInputChange }) => {
       </form>
     </div>
   )
+}
+
+BlogForm.propTypes = {
+  newBlog: PropTypes.object.isRequired,
+  handleNewBlog: PropTypes.func.isRequired,
+  handleNewBlogInputChange: PropTypes.func.isRequired
 }
 
 export default BlogForm
