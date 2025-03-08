@@ -9,11 +9,12 @@ const Blog = ({ blog, loginUser, handleLike, handleDelete }) => {
   return (
     <div className="blog-border">
       <div>
-        {blog.title} {blog.author}
-        <button style={hideWhenVisible} onClick={toggleVisibility}>view</button>
-        <button style={showWhenVisible} onClick={toggleVisibility}>hide</button>
+        <span className='title'>{blog.title}</span>
+        <span className='author'>{blog.author}</span>
+        <button style={hideWhenVisible} onClick={toggleVisibility} className='viewButton'>view</button>
+        <button style={showWhenVisible} onClick={toggleVisibility} className='hideButton'>hide</button>
       </div>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className='detailsContainer'>
         <a href={blog.url} target="_blank" rel="noreferrer">{blog.url}</a>
         <br />
         likes {blog.likes} <button onClick={handleLike}>like</button>
