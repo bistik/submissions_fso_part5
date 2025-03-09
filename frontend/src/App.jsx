@@ -61,8 +61,7 @@ const App = () => {
     event.preventDefault()
     const createdBlog = await blogService.create(newBlog)
     blogFormRef.current.toggleVisibility()
-    blogs.push(createdBlog)
-    setBlogs(blogs)
+    setBlogs(await blogService.getAll()) // workaround to update the list of blogs
     setNewBlog({ title: '', author: '', url: '' })
     setSuccessMessage(`a new blog ${createdBlog.title} by ${createdBlog.author} added`)
     setTimeout(() => {

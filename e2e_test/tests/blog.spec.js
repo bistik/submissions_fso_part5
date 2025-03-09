@@ -1,17 +1,17 @@
 const { test, expect, beforeEach, describe } = require('@playwright/test')
-const { loginWith, createBlog } = require('./helper')
+const { loginWith, createBlog, logout } = require('./helper')
 
 describe('Blog app', () => {
   beforeEach(async ({ page, request }) => {
-    await request.post('http://localhost:3003/api/testing/reset')
-    await request.post('http://localhost:3003/api/users', {
+    await request.post('/api/testing/reset')
+    await request.post('/api/users', {
       data: {
         "username": "test",
         "name": "test",
         "password": "password"
       }
     })
-    await page.goto('http://localhost:5173')
+    await page.goto('/')
   })
   
   test('Login form is shown', async ({ page }) => {
@@ -39,9 +39,9 @@ describe('Blog app', () => {
   describe('When logged in', () => {
     beforeEach(async ({ page }) => {
       await loginWith(page, 'test', 'password')
+      await createBlog(page, 'test title', 'test author', 'https://example.com')
     })
     test('a new blog can be created', async ({ page }) => {
-      await createBlog(page, 'test title', 'test author', 'https://example.com')
       const messageDiv = await page.locator('.message')
       await expect(messageDiv).toContainText('a new blog test title by test author added')
       await expect(page.getByTestId('blog-title')).toBeVisible()
@@ -53,11 +53,20 @@ describe('Blog app', () => {
     beforeEach(async ({ page }) => {
       await loginWith(page, 'test', 'password')
       await createBlog(page, 'test title', 'test author', 'https://example.com')
+      await page.click('text="view"')
     })
     test('a blog can be liked', async ({ page }) => {
-      await page.click('text="view"')
       await page.getByRole('button', { name: 'like' }).click()
       await expect(page.locator('.likes')).toContainText('likes 1')
+    })
+    test('a blog can be deleted', async ({ page }) => {
+      page.on('dialog', dialog => {
+        dialog.accept()
+      })
+      await page.waitForSelector('.message', { state: 'hidden' })
+      await page.getByRole('button', { name: 'remove' }).click()
+      await expect(page.locator('.message')).toContainText('test title by test author removed')
+      await expect(page.locator('.blog-border')).not.toBeVisible()
     })
   })
 })
