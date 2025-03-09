@@ -9,8 +9,8 @@ const Blog = ({ blog, loginUser, handleLike, handleDelete }) => {
   return (
     <div className="blog-border">
       <div>
-        <span className='title'>{blog.title}</span>
-        <span className='author'>{blog.author}</span>
+        <span className='title' data-testid="blog-title">{blog.title}</span>
+        <span className='author' data-testid="blog-author">{blog.author}</span>
         <button style={hideWhenVisible} onClick={toggleVisibility} className='viewButton'>view</button>
         <button style={showWhenVisible} onClick={toggleVisibility} className='hideButton'>hide</button>
       </div>
@@ -19,7 +19,7 @@ const Blog = ({ blog, loginUser, handleLike, handleDelete }) => {
         <br />
         likes {blog.likes} <button onClick={handleLike}>like</button>
         <br />
-        {blog.user.name}
+        {blog.user ? blog.user.name : ''}
         <br />
         {loginUser && blog.user.username === loginUser.username ? <button onClick={handleDelete} className="remove-button">remove</button> : null}
       </div>

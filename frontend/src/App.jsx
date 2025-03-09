@@ -86,7 +86,7 @@ const App = () => {
             type="text"
             value={username}
             name="Username"
-            placeholder='username'
+            data-testid='username'
             onChange={({ target }) => setUsername(target.value)}
           />
         </div>
@@ -96,7 +96,7 @@ const App = () => {
             type="password"
             value={password}
             name="Password"
-            placeholder='password'
+            data-testid='password'
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
@@ -141,7 +141,7 @@ const App = () => {
       }
       {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
         <Blog
-          key={blog.id} blog={blog} loginUser={user}
+          key={blog.id} blog={blog} loginUser={user ? user : null}
           handleLike={() => handleLike(blog)} handleDelete={() => handleDelete(blog)}
         />
       )}
