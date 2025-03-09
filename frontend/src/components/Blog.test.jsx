@@ -24,7 +24,7 @@ test('test blog title and author are rendered', async () => {
 
   const title = container.querySelector('.title')
   expect(title).toHaveTextContent('Lorem impsum')
-  
+
   const author = container.querySelector('.author')
   expect(author).toHaveTextContent('John Doe')
 
