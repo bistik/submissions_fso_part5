@@ -17,11 +17,11 @@ const Blog = ({ blog, loginUser, handleLike, handleDelete }) => {
       <div style={showWhenVisible} className='detailsContainer'>
         <a href={blog.url} target="_blank" rel="noreferrer">{blog.url}</a>
         <br />
-        likes {blog.likes} <button onClick={handleLike}>like</button>
+        <span className='likes'>likes {blog.likes}</span> <button onClick={handleLike}>like</button>
         <br />
         {blog.user ? blog.user.name : ''}
         <br />
-        {loginUser && blog.user.username === loginUser.username ? <button onClick={handleDelete} className="remove-button">remove</button> : null}
+        {loginUser && blog.user && blog.user.username === loginUser.username ? <button onClick={handleDelete} className="remove-button">remove</button> : null}
       </div>
     </div>
   )
